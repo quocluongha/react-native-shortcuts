@@ -1,6 +1,6 @@
 {
   "name": "@rn-bridge/react-native-shortcuts",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "React native library for android shortcuts and iOS quick actions which allow users to quickly access specific app functionalities directly from the home screen or app icon.",
   "source": "./src/index.tsx",
   "main": "./lib/commonjs/index.js",
@@ -28,8 +28,7 @@
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
-    "prepare": "bob build",
-    "postinstall": "bob build"
+    "prepare": "bob build"
   },
   "keywords": [
     "react-native",
