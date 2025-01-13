@@ -2,31 +2,34 @@
 
 # @rn-bridge/react-native-shortcuts
 
-Android Shortcuts and iOS Quick Actions are features that allow users to quickly access specific app functionalities directly from the home screen or app icon, enhancing user experience by providing fast access to common tasks.
+Android Shortcuts and iOS Quick Actions are features that allow users to quickly access specific app
+functionalities directly from the home screen or app icon, enhancing user experience by providing
+fast access to common tasks.
 
 Fully compatible with TypeScript.
 
 ## Example
 
-| Android  |  iOS |
-|---|---|
-|<img src="https://drive.google.com/uc?export=view&id=1yvxaIiDdz3vKxhNE5o0XDLuwwgH1trzw" width="320" />  | <img src="https://drive.google.com/uc?export=view&id=1F3IOUuC1-WRKxOuKcfzSUdjkAr2J-nQT" width="320" /> |
+| Android                                                                                                | iOS                                                                                                    |
+|--------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------|
+| <img src="https://drive.google.com/uc?export=view&id=1yvxaIiDdz3vKxhNE5o0XDLuwwgH1trzw" width="320" /> | <img src="https://drive.google.com/uc?export=view&id=1F3IOUuC1-WRKxOuKcfzSUdjkAr2J-nQT" width="320" /> |
 
 ## Supported platforms
 
-| Platform  |  Support |
-|---|---|
-| iOS  |  ✅ |
-| Android  |  ✅ |
-| Web  |  ❌ |
-| Windows  |  ❌ |
-| macOS  |  ❌ |
+| Platform | Support |
+|----------|---------|
+| iOS      | ✅       |
+| Android  | ✅       |
+| Web      | ❌       |
+| Windows  | ❌       |
+| macOS    | ❌       |
 
 ## Installation
 
 ```sh
 npm install @rn-bridge/react-native-shortcuts
 ```
+
 or
 
 ```sh
@@ -38,9 +41,11 @@ yarn add @rn-bridge/react-native-shortcuts
 ### iOS
 
 Add the following code to your `AppDelegate.m`
+
 ```objective-c
 #import "RNShortcuts.h"
 ```
+
 ```objective-c
 - (void)application:(UIApplication *)application performActionForShortcutItem:(UIApplicationShortcutItem *)shortcutItem completionHandler:(void (^)(BOOL))completionHandler {
   [RNShortcuts handleShortcutItem:shortcutItem];
@@ -56,36 +61,40 @@ No setup needed
 
 ### Methods
 
-|  Name                                                         |  Description |
-|   ---                                                         |     ---      |
-| [`addShortcut`](#addShortcut)                                 | Adds the shortcut(android), quick action(ios) for the given details. |
-| [`updateShortcut`](#updateShortcut)                           | Updates the shortcut or quick action details. |
-| [`removeShortcut`](#removeShortcut)                           | Removes the specific shortcut. For android in case if the user changes your app shortcut to pinned shortcut, app shortcut will be removed but pinned shortcut will be still visible but in disabled state. This shortcut is no longer valid and is not clickable. |
-| [`removeAllShortcuts`](#removeAllShortcuts)                   | Removes all the shortcuts. For android in case if the user changes your app shortcuts to pinned shortcuts, app shortcuts will be removed but pinned shortcuts will be still visible but in disabled state. These shortcuts are no longer valid and are not clickable. |
-| [`getShortcutById`](#getShortcutById)                         | Returns the shortcut details such as id, title, longLabel, subtitle. |
-| [`isShortcutExists`](#isShortcutExists)                       | Returns whether the shortcut is registered with given id. | 
-| [`isShortcutSupported`](#isShortcutSupported)                 | Returns whether your device supports shortcuts(android), quick actions(ios). |
-| [`getInitialShortcutId`](#getInitialShortcutId)               | If the initial app launch was triggered by a shortcut, it will give the id of that shortcut, otherwise it will give null. |
-| [`addOnShortcutUsedListener`](#addOnShortcutUsedListener)        | If the app is in background and the app is launchced by a shortcut, it will give the id of that shortcut.  |
-| [`removeOnShortcutUsedListener`](#removeOnShortcutUsedListener)  | Removes the listener. You app no longer receives events. |
+| Name                                                            | Description                                                                                                                                                                                                                                                           |
+|-----------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`addShortcut`](#addShortcut)                                   | Adds the shortcut(android), quick action(ios) for the given details.                                                                                                                                                                                                  |
+| [`updateShortcut`](#updateShortcut)                             | Updates the shortcut or quick action details.                                                                                                                                                                                                                         |
+| [`removeShortcut`](#removeShortcut)                             | Removes the specific shortcut. For android in case if the user changes your app shortcut to pinned shortcut, app shortcut will be removed but pinned shortcut will be still visible but in disabled state. This shortcut is no longer valid and is not clickable.     |
+| [`removeAllShortcuts`](#removeAllShortcuts)                     | Removes all the shortcuts. For android in case if the user changes your app shortcuts to pinned shortcuts, app shortcuts will be removed but pinned shortcuts will be still visible but in disabled state. These shortcuts are no longer valid and are not clickable. |
+| [`getShortcutById`](#getShortcutById)                           | Returns the shortcut details such as id, title, longLabel, subtitle.                                                                                                                                                                                                  |
+| [`isShortcutExists`](#isShortcutExists)                         | Returns whether the shortcut is registered with given id.                                                                                                                                                                                                             | 
+| [`isShortcutSupported`](#isShortcutSupported)                   | Returns whether your device supports shortcuts(android), quick actions(ios).                                                                                                                                                                                          |
+| [`getInitialShortcutId`](#getInitialShortcutId)                 | If the initial app launch was triggered by a shortcut, it will give the id of that shortcut, otherwise it will give null.                                                                                                                                             |
+| [`addOnShortcutUsedListener`](#addOnShortcutUsedListener)       | If the app is in background and the app is launchced by a shortcut, it will give the id of that shortcut.                                                                                                                                                             |
+| [`removeOnShortcutUsedListener`](#removeOnShortcutUsedListener) | Removes the listener. You app no longer receives events.                                                                                                                                                                                                              |
 
 ## Usage
 
 Import
+
 ```javascript
 import Shortcuts from '@rn-bridge/react-native-shortcuts';
 ```
 
 ### isShortcutSupported
+
 ```javascript
 const response = await Shortcuts.isShortcutSupported() // true or false
 ```
-| Platform  |  Supported Version |
-|---|---|
-| iOS  |  >=9.0 |
-| Android  |  >=7.1 (API Level 25) |
+
+| Platform | Supported Version    |
+|----------|----------------------|
+| iOS      | >=9.0                |
+| Android  | >=7.1 (API Level 25) |
 
 ### addShortcut
+
 ```javascript
 const response = await Shortcuts.addShortcut({
   id: "a426a46b-7389-431c-9ea8-8b370e0c65fc",
@@ -93,23 +102,34 @@ const response = await Shortcuts.addShortcut({
   iconName: "app_shortcut"
 })
 ```
+
 Response:
+
 ```json
 {
   "id": "a426a46b-7389-431c-9ea8-8b370e0c65fc",
   "title": "Open App"
 }
 ```
+
 Supported options:
-|  Key               |  Platform     |  Required    |  Description |
-|   ---              |     ---       |    ---       |     ---     |
-| `id`               |     Both      |    Yes       | A required, app-specific string that you employ to identify the shortcut. |
-| `title`            |     Both      |    Yes       | The required, user-visible title for the Home Screen shortcut. |
-| `longLabel`        |     Android   |    No        |  An extended phrase that describes the shortcut's purpose. If there's enough space, the launcher displays this value instead of title. When possible, limit this long description to 25 characters. |
-| `subtitle`         |     iOS       |    No        | The user-visible subtitle for the Home Screen dynamic quick action. |
-| `iconName`         |     Both      |    No        |  The icon for the Home Screen shortcut. Icon name should be the name of your iOS asset or Android drawable. Refer [iOS](https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs) [Android](https://developer.android.com/studio/write/resource-manager) resource addition. |
+| Key | Platform | Required | Description |
+| --- | --- | --- | --- |
+| `id`               | Both | Yes | A required, app-specific string that you employ to identify the
+shortcut. |
+| `title`            | Both | Yes | The required, user-visible title for the Home Screen shortcut. |
+| `longLabel`        | Android | No | An extended phrase that describes the shortcut's purpose. If
+there's enough space, the launcher displays this value instead of title. When possible, limit this
+long description to 25 characters. |
+| `subtitle`         | iOS | No | The user-visible subtitle for the Home Screen dynamic quick
+action. |
+| `iconName`         | Both | No | The icon for the Home Screen shortcut. Icon name should be the
+name of your iOS asset or Android drawable.
+Refer [iOS](https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs) [Android](https://developer.android.com/studio/write/resource-manager)
+resource addition. |
 
 ### updateShortcut
+
 ```javascript
 const response = await Shortcuts.updateShortcut({
   id: "a426a46b-7389-431c-9ea8-8b370e0c65fc",
@@ -117,51 +137,67 @@ const response = await Shortcuts.updateShortcut({
   iconName: "app_shortcut"
 })
 ```
+
 Response:
+
 ```json
 {
   "id": "a426a46b-7389-431c-9ea8-8b370e0c65fc",
   "title": "Open App"
 }
 ```
+
 Supported options:
-|  Key               |  Platform     |  Required    |  Description |
-|   ---              |     ---       |    ---       |     ---     |
-| `id`               |     Both      |    Yes       | The shortcut id which you want to update. |
-| `title`            |     Both      |    Yes       | The required, user-visible title for the Home Screen shortcut. |
-| `longLabel`        |     Android   |    No        |  An extended phrase that describes the shortcut's purpose. If there's enough space, the launcher displays this value instead of title. When possible, limit this long description to 25 characters. |
-| `subtitle`         |     iOS       |    No        | The user-visible subtitle for the Home Screen dynamic quick action. |
-| `iconName`         |     Both      |    No        |  The icon for the Home Screen shortcut. Icon name should be the name of your iOS asset or Android drawable. Refer [iOS](https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs) [Android](https://developer.android.com/studio/write/resource-manager) resource addition. |
+| Key | Platform | Required | Description |
+| --- | --- | --- | --- |
+| `id`               | Both | Yes | The shortcut id which you want to update. |
+| `title`            | Both | Yes | The required, user-visible title for the Home Screen shortcut. |
+| `longLabel`        | Android | No | An extended phrase that describes the shortcut's purpose. If
+there's enough space, the launcher displays this value instead of title. When possible, limit this
+long description to 25 characters. |
+| `subtitle`         | iOS | No | The user-visible subtitle for the Home Screen dynamic quick
+action. |
+| `iconName`         | Both | No | The icon for the Home Screen shortcut. Icon name should be the
+name of your iOS asset or Android drawable.
+Refer [iOS](https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs) [Android](https://developer.android.com/studio/write/resource-manager)
+resource addition. |
 
 ### removeShortcut
+
 ```javascript
 const response = await Shortcuts.removeShortcut("a426a46b-7389-431c-9ea8-8b370e0c65fc") // true or false
 ```
+
 Supported options:
-|  Key               |  Platform     |  Required    |  Description |
-|   ---              |     ---       |    ---       |     ---     |
-| `id`               |     Both      |    Yes       | The shortcut id which you want to remove. |
+| Key | Platform | Required | Description |
+| --- | --- | --- | --- |
+| `id`               | Both | Yes | The shortcut id which you want to remove. |
 
 ### removeAllShortcuts
+
 ```javascript
 const response = await Shortcuts.removeAllShortcuts() // true or false
 ```
 
 ### isShortcutExists
+
 ```javascript
 const response = await Shortcuts.isShortcutExists("a426a46b-7389-431c-9ea8-8b370e0c65fc") // true or false
 ```
+
 Supported options:
-|  Key               |  Platform     |  Required    |  Description |
-|   ---              |     ---       |    ---       |     ---     |
-| `id`               |     Both      |    Yes       | The shortcut id which you want to check. |
+| Key | Platform | Required | Description |
+| --- | --- | --- | --- |
+| `id`               | Both | Yes | The shortcut id which you want to check. |
 
 ### getShortcutById
+
 ```javascript
 const response = await Shortcuts.getShortcutById("a426a46b-7389-431c-9ea8-8b370e0c65fc") // true or false
 ```
 
 Response:
+
 ```json
 {
   "id": "a426a46b-7389-431c-9ea8-8b370e0c65fc",
@@ -170,13 +206,17 @@ Response:
   "subtitle": "..."
 }
 ```
+
 Supported options:
-|  Key               |  Platform     |  Required    |  Description |
-|   ---              |     ---       |    ---       |     ---     |
-| `id`               |     Both      |    Yes       | The shortcut id which you want to get. |
+| Key | Platform | Required | Description |
+| --- | --- | --- | --- |
+| `id`               | Both | Yes | The shortcut id which you want to get. |
 
 ### getInitialShortcutId
-If the initial app launch was triggered by a shortcut, it will give the id of that shortcut, otherwise it will give null.
+
+If the initial app launch was triggered by a shortcut, it will give the id of that shortcut,
+otherwise it will give null.
+
 ```javascript
 const callback = (id) => {
   console.log('Shortcut Id:', id);
@@ -186,7 +226,10 @@ const id = await Shortcuts.getInitialShortcutId();
 ```
 
 ### addOnShortcutUsedListener
-If the app is in background and the app is launchced by a shortcut, it will give the id of that shortcut.
+
+If the app is in background and the app is launchced by a shortcut, it will give the id of that
+shortcut.
+
 ```javascript
 const callback = (id) => {
   console.log('Shortcut Id:', id);
@@ -196,6 +239,7 @@ Shortcuts.addOnShortcutUsedListener(callback);
 ```
 
 ### removeOnShortcutUsedListener
+
 ```javascript
 Shortcuts.removeOnShortcutUsedListener();
 ```
