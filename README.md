@@ -218,11 +218,15 @@ If the initial app launch was triggered by a shortcut, it will give the id of th
 otherwise it will give null.
 
 ```javascript
+const id = await Shortcuts.getInitialShortcutId();
+
+or
+
 const callback = (id) => {
   console.log('Shortcut Id:', id);
 };
 
-const id = await Shortcuts.getInitialShortcutId();
+Shortcuts.getInitialShortcutId().then(callback)
 ```
 
 ### addOnShortcutUsedListener
