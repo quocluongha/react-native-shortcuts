@@ -1,13 +1,13 @@
 package com.rnbridge.shortcuts
 
-import com.facebook.react.TurboReactPackage
+import com.facebook.react.BaseReactPackage
 import com.facebook.react.bridge.NativeModule
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.module.model.ReactModuleInfo
 import com.facebook.react.module.model.ReactModuleInfoProvider
 import com.facebook.react.uimanager.ViewManager
 
-class RNShortcutsPackage : TurboReactPackage() {
+class RNShortcutsPackage : BaseReactPackage() {
     override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
         return listOf(RNShortcutsModule(reactContext))
     }
