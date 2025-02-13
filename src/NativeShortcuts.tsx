@@ -1,0 +1,27 @@
+import { type TurboModule, TurboModuleRegistry } from 'react-native';
+
+export interface ShortcutResponseType {
+  id: string;
+  title: string;
+  subTitle?: string;
+  longLabel?: string;
+}
+
+export interface ShortcutParamsType extends ShortcutResponseType {
+  iconName?: string;
+}
+
+export interface Spec extends TurboModule {
+  addShortcut(params: ShortcutParamsType): Promise<ShortcutResponseType>;
+  updateShortcut(params: ShortcutParamsType): Promise<ShortcutResponseType>;
+  removeShortcut(id: string): Promise<boolean>;
+  removeAllShortcuts(): Promise<boolean>;
+  getShortcutById(id: string): Promise<ShortcutResponseType>;
+  isShortcutExists(id: string): Promise<boolean>;
+  isShortcutSupported(): Promise<boolean>;
+  getInitialShortcutId(): Promise<string>;
+  addOnShortcutUsedListener(callback: (id: string) => void): void;
+  removeOnShortcutUsedListener(): void;
+}
+
+export default TurboModuleRegistry.getEnforcing<Spec>("RNShortcuts");

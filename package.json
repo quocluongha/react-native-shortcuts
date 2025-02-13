@@ -73,6 +73,14 @@
     "react": "*",
     "react-native": "*"
   },
+  "codegenConfig": {
+    "name": "RNShortcuts",
+    "type": "modules",
+    "jsSrcsDir": "./src",
+    "android": {
+      "javaPackageName": "com.rnbridge.shortcuts"
+    }
+  },
   "jest": {
     "preset": "react-native",
     "modulePathIgnorePatterns": [
