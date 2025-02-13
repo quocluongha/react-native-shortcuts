@@ -1,22 +1,13 @@
-import { type EventSubscription } from 'react-native';
-export interface shortcutResponseType {
-    id: string;
-    title: string;
-    subTitle?: string;
-    longLabel?: string;
-}
-export interface shortcutParamsType extends shortcutResponseType {
-    iconName?: string;
-}
-declare function addShortcut(params: shortcutParamsType): Promise<shortcutResponseType>;
-declare function updateShortcut(params: shortcutParamsType): Promise<shortcutResponseType>;
+import { type ShortcutParamsType, type ShortcutResponseType } from './NativeShortcuts';
+declare function addShortcut(params: ShortcutParamsType): Promise<ShortcutResponseType>;
+declare function updateShortcut(params: ShortcutParamsType): Promise<ShortcutResponseType>;
 declare function removeShortcut(id: string): Promise<boolean>;
 declare function removeAllShortcuts(): Promise<boolean>;
-declare function getShortcutById(id: string): Promise<shortcutResponseType>;
+declare function getShortcutById(id: string): Promise<ShortcutResponseType>;
 declare function isShortcutExists(id: string): Promise<boolean>;
 declare function isShortcutSupported(): Promise<boolean>;
 declare function getInitialShortcutId(): Promise<string>;
-declare function addOnShortcutUsedListener(callback: (id: string) => void): EventSubscription;
+declare function addOnShortcutUsedListener(callback: (id: string) => void): void;
 declare function removeOnShortcutUsedListener(): void;
 declare const _default: {
     addShortcut: typeof addShortcut;
