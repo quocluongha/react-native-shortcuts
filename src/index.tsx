@@ -1,26 +1,16 @@
 import {
   Platform,
   NativeEventEmitter,
+  type NativeModule,
 } from 'react-native';
-import NativeShortcuts from './NativeShortcuts';
+import NativeShortcuts, { type ShortcutParamsType, type ShortcutResponseType } from './NativeShortcuts';
 
-const nativeModule: any = Platform.OS === 'ios' ? NativeShortcuts : null;
-const shortcutsEventEmitter = new NativeEventEmitter(nativeModule);
-
-export interface shortcutResponseType {
-  id: string;
-  title: string;
-  subTitle?: string;
-  longLabel?: string;
-}
-
-export interface shortcutParamsType extends shortcutResponseType {
-  iconName?: string;
-}
+const nativeModule = Platform.OS === 'ios' ? NativeShortcuts : null;
+const shortcutsEventEmitter = new NativeEventEmitter(nativeModule as unknown as NativeModule);
 
 async function addShortcut(
-  params: shortcutParamsType
-): Promise<shortcutResponseType> {
+  params: ShortcutParamsType
+): Promise<ShortcutResponseType> {
   if (!params.id || !params.title) {
     return Promise.reject('Invalid request parameters');
   }
@@ -29,8 +19,8 @@ async function addShortcut(
 }
 
 async function updateShortcut(
-  params: shortcutParamsType
-): Promise<shortcutResponseType> {
+  params: ShortcutParamsType
+): Promise<ShortcutResponseType> {
   if (!params.id || !params.title) {
     return Promise.reject('Invalid request parameters');
   }
@@ -49,7 +39,7 @@ async function removeAllShortcuts(): Promise<boolean> {
   return NativeShortcuts.removeAllShortcuts();
 }
 
-async function getShortcutById(id: string): Promise<shortcutResponseType> {
+async function getShortcutById(id: string): Promise<ShortcutResponseType> {
   if (!id) {
     return Promise.reject('Invalid id');
   }
