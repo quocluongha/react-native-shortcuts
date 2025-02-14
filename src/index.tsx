@@ -1,12 +1,17 @@
 import {
   Platform,
   NativeEventEmitter,
-  type NativeModule,
+  type NativeModule
 } from 'react-native';
-import NativeShortcuts, { type ShortcutParamsType, type ShortcutResponseType } from './NativeShortcuts';
+import RNShortcuts, { type ShortcutParamsType, type ShortcutResponseType } from './NativeShortcuts';
+import type { EventSubscription } from 'react-native/Libraries/vendor/emitter/EventEmitter';
 
-const nativeModule = Platform.OS === 'ios' ? NativeShortcuts : null;
-const shortcutsEventEmitter = new NativeEventEmitter(nativeModule as unknown as NativeModule);
+const emitterModule = Platform.select({
+  ios: RNShortcuts,
+  android: null
+}) as unknown as NativeModule | undefined
+
+const shortcutsEventEmitter = new NativeEventEmitter(emitterModule);
 
 async function addShortcut(
   params: ShortcutParamsType
@@ -15,7 +20,7 @@ async function addShortcut(
     return Promise.reject('Invalid request parameters');
   }
 
-  return NativeShortcuts.addShortcut(params);
+  return RNShortcuts.addShortcut(params);
 }
 
 async function updateShortcut(
@@ -25,50 +30,50 @@ async function updateShortcut(
     return Promise.reject('Invalid request parameters');
   }
 
-  return NativeShortcuts.updateShortcut(params);
+  return RNShortcuts.updateShortcut(params);
 }
 
 async function removeShortcut(id: string): Promise<boolean> {
   if (!id) {
     return Promise.reject('Invalid id');
   }
-  return NativeShortcuts.removeShortcut(id);
+  return RNShortcuts.removeShortcut(id);
 }
 
 async function removeAllShortcuts(): Promise<boolean> {
-  return NativeShortcuts.removeAllShortcuts();
+  return RNShortcuts.removeAllShortcuts();
 }
 
 async function getShortcutById(id: string): Promise<ShortcutResponseType> {
   if (!id) {
     return Promise.reject('Invalid id');
   }
-  return NativeShortcuts.getShortcutById(id);
+  return RNShortcuts.getShortcutById(id);
 }
 
 async function isShortcutExists(id: string): Promise<boolean> {
   if (!id) {
     return Promise.reject('Invalid id');
   }
-  return NativeShortcuts.isShortcutExists(id);
+  return RNShortcuts.isShortcutExists(id);
 }
 
 async function isShortcutSupported(): Promise<boolean> {
-  return NativeShortcuts.isShortcutSupported();
+  return RNShortcuts.isShortcutSupported();
 }
 
 async function getInitialShortcutId(): Promise<string> {
-  return NativeShortcuts.getInitialShortcutId();
+  return RNShortcuts.getInitialShortcutId();
 }
 
 function addOnShortcutUsedListener(
   callback: (id: string) => void
-) {
-  shortcutsEventEmitter.addListener('onShortcutUsed', callback);
-}
+): EventSubscription {
+  if (typeof RNShortcuts.onShortcutUsed === "function" ) {
+    return RNShortcuts.onShortcutUsed(callback)
+  }
 
-function removeOnShortcutUsedListener() {
-  shortcutsEventEmitter.removeAllListeners('onShortcutUsed');
+  return shortcutsEventEmitter.addListener('onShortcutUsed', callback);
 }
 
 export default {
@@ -80,6 +85,5 @@ export default {
   isShortcutExists,
   isShortcutSupported,
   getInitialShortcutId,
-  addOnShortcutUsedListener,
-  removeOnShortcutUsedListener
+  addOnShortcutUsedListener
 };

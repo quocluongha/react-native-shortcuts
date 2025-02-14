@@ -146,9 +146,7 @@ class RNShortcutsModule(reactContext: ReactApplicationContext) :
     }
 
     private fun sendEvent(id: String) {
-        context
-            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
-            .emit("onShortcutUsed", id)
+        emitOnShortcutUsed(id)
     }
 
     override fun onActivityResult(a: Activity?, b: Int, c: Int, d: Intent?) {}
@@ -164,10 +162,6 @@ class RNShortcutsModule(reactContext: ReactApplicationContext) :
         context.removeActivityEventListener(this)
         super.invalidate()
     }
-
-    override fun addOnShortcutUsedListener(callback: Callback) {}
-
-    override fun removeOnShortcutUsedListener() {}
 
     companion object {
         const val NAME = "RNShortcuts"
