@@ -39,6 +39,7 @@ yarn add @rn-bridge/react-native-shortcuts
 ## Setup
 
 ### iOS
+#### If you are using `Objective-C`
 
 Add the following code to your `AppDelegate.m`
 
@@ -51,6 +52,23 @@ Add the following code to your `AppDelegate.m`
   [RNShortcuts handleShortcutItem:shortcutItem];
   completionHandler(YES);
 }
+```
+#### If you are using `Swift`
+
+Add the following line to your App's `Bridging-Header.h`
+
+> [!IMPORTANT]
+> A Bridging Header is required in iOS development when you want to use Objective-C code in a Swift project.
+```objective-c
+#import "RNShortcuts.h"
+```
+
+Add the following code to your `AppDelegate.swift`
+```swift
+  override func application(_ application: UIApplication, performActionFor shortcutItem: UIApplicationShortcutItem, completionHandler: @escaping (Bool) -> Void) {
+      RNShortcuts.handle(shortcutItem)
+      completionHandler(true)
+  }
 ```
 
 ### Android
@@ -72,8 +90,6 @@ No setup needed
 | [`isShortcutSupported`](#isShortcutSupported)                   | Returns whether your device supports shortcuts(android), quick actions(ios).                                                                                                                                                                                          |
 | [`getInitialShortcutId`](#getInitialShortcutId)                 | If the initial app launch was triggered by a shortcut, it will give the id of that shortcut, otherwise it will give null.                                                                                                                                             |
 | [`addOnShortcutUsedListener`](#addOnShortcutUsedListener)       | If the app is in background and the app is launchced by a shortcut, it will give the id of that shortcut.                                                                                                                                                             |
-| [`removeOnShortcutUsedListener`](#removeOnShortcutUsedListener) | Removes the listener. You app no longer receives events.                                                                                                                                                                                                              |
-
 ## Usage
 
 Import
@@ -235,17 +251,21 @@ If the app is in background and the app is launchced by a shortcut, it will give
 shortcut.
 
 ```javascript
-const callback = (id) => {
-  console.log('Shortcut Id:', id);
-};
+React.useEffect(() => {
+  const callback = (id: string) => {
+    console.log('Shortcut Id:', id);
+    if (id) {
+      Alert.alert('Shortcut Detected', `App opened with shortcut id: ${id}`);
+    }
+  };
 
-Shortcuts.addOnShortcutUsedListener(callback);
-```
+  listenerSubscription.current = Shortcuts.addOnShortcutUsedListener(callback);
 
-### removeOnShortcutUsedListener
-
-```javascript
-Shortcuts.removeOnShortcutUsedListener();
+  return () => {
+    listenerSubscription.current?.remove();
+    listenerSubscription.current = null;
+  }
+}, [])
 ```
 
 ## How To Run Example App ?
