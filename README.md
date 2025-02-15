@@ -249,6 +249,8 @@ If the app is in background and the app is launchced by a shortcut, it will give
 shortcut.
 
 ```javascript
+const listenerSubscription = React.useRef<null | EventSubscription>(null);
+
 React.useEffect(() => {
   const callback = (id: string) => {
     console.log('Shortcut Id:', id);
