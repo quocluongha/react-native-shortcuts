@@ -1,5 +1,6 @@
-import Shortcuts, { type shortcutParamsType } from '../';
+import Shortcuts from '../';
 import { NativeModules } from 'react-native';
+import type { ShortcutParamsType } from '../NativeShortcuts';
 
 jest.mock('react-native', () => ({
   NativeModules: {
@@ -49,7 +50,7 @@ describe('RNShortcuts', () => {
 
   test('should throw error if adding a shortcut with invalid parameters', async () => {
     await expect(
-      Shortcuts.addShortcut({} as shortcutParamsType)
+      Shortcuts.addShortcut({} as ShortcutParamsType)
     ).rejects.toEqual('Invalid request parameters');
     expect(NativeModules.RNShortcuts.addShortcut).not.toHaveBeenCalled();
   });
@@ -66,7 +67,7 @@ describe('RNShortcuts', () => {
 
   test('should throw error if updating a shortcut with invalid parameters', async () => {
     await expect(
-      Shortcuts.updateShortcut({} as shortcutParamsType)
+      Shortcuts.updateShortcut({} as ShortcutParamsType)
     ).rejects.toEqual('Invalid request parameters');
     expect(NativeModules.RNShortcuts.updateShortcut).not.toHaveBeenCalled();
   });

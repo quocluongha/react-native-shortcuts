@@ -1,44 +1,21 @@
 import {
-  NativeModules,
   Platform,
   NativeEventEmitter,
-  type EventSubscription
+  type EventSubscription,
+  type NativeModule
 } from 'react-native';
+import RNShortcuts, { type ShortcutParamsType, type ShortcutResponseType } from './NativeShortcuts';
 
-const LINKING_ERROR =
-  `The package '@rn-bridge/react-native-shortcuts' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
+const emitterModule = Platform.select({
+  ios: RNShortcuts,
+  android: null
+}) as unknown as NativeModule | undefined
 
-const RNShortcuts = NativeModules.RNShortcuts
-  ? NativeModules.RNShortcuts
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        }
-      }
-    );
-
-const nativeModule = Platform.OS === 'ios' ? NativeModules.RNShortcuts : null;
-const shortcutsEventEmitter = new NativeEventEmitter(nativeModule);
-
-export interface shortcutResponseType {
-  id: string;
-  title: string;
-  subTitle?: string;
-  longLabel?: string;
-}
-
-export interface shortcutParamsType extends shortcutResponseType {
-  iconName?: string;
-}
+const shortcutsEventEmitter = new NativeEventEmitter(emitterModule);
 
 async function addShortcut(
-  params: shortcutParamsType
-): Promise<shortcutResponseType> {
+  params: ShortcutParamsType
+): Promise<ShortcutResponseType> {
   if (!params.id || !params.title) {
     return Promise.reject('Invalid request parameters');
   }
@@ -47,8 +24,8 @@ async function addShortcut(
 }
 
 async function updateShortcut(
-  params: shortcutParamsType
-): Promise<shortcutResponseType> {
+  params: ShortcutParamsType
+): Promise<ShortcutResponseType> {
   if (!params.id || !params.title) {
     return Promise.reject('Invalid request parameters');
   }
@@ -67,7 +44,7 @@ async function removeAllShortcuts(): Promise<boolean> {
   return RNShortcuts.removeAllShortcuts();
 }
 
-async function getShortcutById(id: string): Promise<shortcutResponseType> {
+async function getShortcutById(id: string): Promise<ShortcutResponseType> {
   if (!id) {
     return Promise.reject('Invalid id');
   }
@@ -92,11 +69,11 @@ async function getInitialShortcutId(): Promise<string> {
 function addOnShortcutUsedListener(
   callback: (id: string) => void
 ): EventSubscription {
-  return shortcutsEventEmitter.addListener('onShortcutUsed', callback);
-}
+  if (typeof RNShortcuts.onShortcutUsed === "function" ) {
+    return RNShortcuts.onShortcutUsed(callback)
+  }
 
-function removeOnShortcutUsedListener() {
-  shortcutsEventEmitter.removeAllListeners('onShortcutUsed');
+  return shortcutsEventEmitter.addListener('onShortcutUsed', callback);
 }
 
 export default {
@@ -108,6 +85,5 @@ export default {
   isShortcutExists,
   isShortcutSupported,
   getInitialShortcutId,
-  addOnShortcutUsedListener,
-  removeOnShortcutUsedListener
+  addOnShortcutUsedListener
 };

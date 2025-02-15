@@ -1,5 +1,22 @@
-#import <React/RCTBridgeModule.h>
+#import <React/RCTEventEmitter.h>
 
-@interface RNShortcuts : NSObject <RCTBridgeModule>
-+(void) handleShortcutItem:(UIApplicationShortcutItem *) shortcutItem;
+#ifdef RCT_NEW_ARCH_ENABLED
+#import <shortcuts/shortcuts.h>
+#else
+#import <React/RCTBridgeModule.h>
+#endif
+
+NS_ASSUME_NONNULL_BEGIN
+
+#ifdef RCT_NEW_ARCH_ENABLED
+@interface RNShortcuts : NativeShortcutsSpecBase <NativeShortcutsSpec>
+#else
+@interface RNShortcuts : RCTEventEmitter <RCTBridgeModule>
+#endif
+
++ (void)handleShortcutItem:(UIApplicationShortcutItem *)shortcutItem;
+
 @end
+
+NS_ASSUME_NONNULL_END
+

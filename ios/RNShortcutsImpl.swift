@@ -1,42 +1,23 @@
+import Foundation
 import React
-import UIKit
 
-@objc(RNShortcuts)
-class RNShortcuts: RCTEventEmitter {
+public class RNShortcutsImpl: NSObject {
+    @objc public static var shortcutItemType: String?
     
-    private static var shortcutItemType: String?
-    private static var shared: RNShortcuts?
-    
-    override init() {
-        super.init()
-        RNShortcuts.shared = self
-    }
-    
-    override func invalidate() {
-        RNShortcuts.shared = nil
-    }
-    
-    override func supportedEvents() -> [String]! {
-        return ["onShortcutUsed"]
-    }
-    
-    @objc class func handleShortcutItem(_ shortcutItem: UIApplicationShortcutItem) {
-        RNShortcuts.shortcutItemType = shortcutItem.type
-        RNShortcuts.shared?.sendEvent(withName: "onShortcutUsed", body: shortcutItem.type)
-    }
+    @objc public static let shared = RNShortcutsImpl()
     
     @objc(getInitialShortcutId: withReject:)
-    func getInitialShortcutId(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
-        resolve(RNShortcuts.shortcutItemType)
+    public func getInitialShortcutId(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+        resolve(RNShortcutsImpl.shortcutItemType)
     }
     
     @objc(isShortcutSupported: withReject:)
-    func isShortcutSupported(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    public func isShortcutSupported(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         resolve(isSupported())
     }
     
     @objc(addShortcut:withResolve:withReject:)
-    func addShortcut(params: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    public func addShortcut(params: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         handleShortcutOperation(params: params, resolve: resolve, reject: reject) { shortcutItem in
             UIApplication.shared.shortcutItems?.append(shortcutItem)
             resolve(shortcutItem.toDictionary())
@@ -44,14 +25,14 @@ class RNShortcuts: RCTEventEmitter {
     }
     
     @objc(updateShortcut:withResolve:withReject:)
-    func updateShortcut(params: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    public func updateShortcut(params: NSDictionary, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         handleShortcutOperation(params: params, resolve: resolve, reject: reject) { shortcutItem in
             self.updateShortcutItem(shortcutItem, resolve: resolve, reject: reject)
         }
     }
     
     @objc(removeShortcut:withResolve:withReject:)
-    func removeShortcut(id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    public func removeShortcut(id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         
         DispatchQueue.main.async {
             UIApplication.shared.shortcutItems = UIApplication.shared.shortcutItems?.filter { $0.type != id }
@@ -61,7 +42,7 @@ class RNShortcuts: RCTEventEmitter {
     }
     
     @objc(removeAllShortcuts:withReject:)
-    func removeAllShortcuts(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    public func removeAllShortcuts(resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         
         DispatchQueue.main.async {
             UIApplication.shared.shortcutItems = []
@@ -71,7 +52,7 @@ class RNShortcuts: RCTEventEmitter {
     }
     
     @objc(getShortcutById:withResolve:withReject:)
-    func getShortcutById(id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    public func getShortcutById(id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         
         DispatchQueue.main.async {
             if let shortcut = UIApplication.shared.shortcutItems?.first(where: { $0.type == id }) {
@@ -83,7 +64,7 @@ class RNShortcuts: RCTEventEmitter {
     }
     
     @objc(isShortcutExists:withResolve:withReject:)
-    func isShortcutExists(id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
+    public func isShortcutExists(id: String, resolve: @escaping RCTPromiseResolveBlock, reject: @escaping RCTPromiseRejectBlock) {
         
         DispatchQueue.main.async {
             resolve(UIApplication.shared.shortcutItems?.contains(where: { $0.type == id }) ?? false)
