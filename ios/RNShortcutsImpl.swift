@@ -1,7 +1,6 @@
 import Foundation
 import React
 
-@objc(RNShortcutsImpl)
 public class RNShortcutsImpl: NSObject {
     @objc public static var shortcutItemType: String?
     
