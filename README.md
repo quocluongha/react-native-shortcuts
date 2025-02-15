@@ -2,11 +2,9 @@
 
 # @rn-bridge/react-native-shortcuts
 
-Android Shortcuts and iOS Quick Actions are features that allow users to quickly access specific app
-functionalities directly from the home screen or app icon, enhancing user experience by providing
-fast access to common tasks.
+React native library for android shortcuts and iOS quick actions which allow users to quickly access specific app functionalities directly from the home screen or app icon, enhancing user experience by providing fast access to common tasks.
 
-Fully compatible with TypeScript.
+Fully compatible with TypeScript & Turbomodules.
 
 ## Example
 
