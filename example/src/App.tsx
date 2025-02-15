@@ -1,5 +1,6 @@
-import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native';
+import { StyleSheet, View, TouchableOpacity, Text, Alert, type EventSubscription } from 'react-native';
 import Shortcuts from '@rn-bridge/react-native-shortcuts';
+import React from 'react';
 
 const Button = ({
   title,
@@ -24,6 +25,26 @@ const title = 'Open App (Shortcut)';
 const iconName = 'app_shortcut';
 
 export const App = () => {
+
+  const listenerSubscription = React.useRef<null | EventSubscription>(null);
+
+  React.useEffect(() => {
+    const callback = (id: string) => {
+      console.log('Shortcut Id:', id);
+      if (id) {
+        Alert.alert('Shortcut Detected', `App opened with shortcut id: ${id}`);
+      }
+    };
+
+    listenerSubscription.current = Shortcuts.addOnShortcutUsedListener(callback);
+    Shortcuts.getInitialShortcutId().then(callback);
+
+    return () => {
+      listenerSubscription.current?.remove();
+      listenerSubscription.current = null;
+    }
+  }, [])
+
   return (
     <View style={styles.container}>
       <Button

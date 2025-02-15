@@ -1,10 +1,10 @@
 import {
   Platform,
   NativeEventEmitter,
+  type EventSubscription,
   type NativeModule
 } from 'react-native';
 import RNShortcuts, { type ShortcutParamsType, type ShortcutResponseType } from './NativeShortcuts';
-import type { EventSubscription } from 'react-native/Libraries/vendor/emitter/EventEmitter';
 
 const emitterModule = Platform.select({
   ios: RNShortcuts,
