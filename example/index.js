@@ -11,6 +11,6 @@ const callback = (id) => {
 };
 
 Shortcuts.addOnShortcutUsedListener(callback);
-// Shortcuts.getInitialShortcutId().then(callback);
+Shortcuts.getInitialShortcutId().then(callback);
 
 AppRegistry.registerComponent(appName, () => App);

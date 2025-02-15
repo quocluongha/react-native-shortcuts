@@ -41,19 +41,21 @@ class RNShortcutsModule(reactContext: ReactApplicationContext) :
         promise.resolve(isSupported)
     }
 
-    override fun addShortcut(params: ReadableMap, promise: Promise) = handleShortcutOperation(promise) {
-        val shortcut = createShortcut(params)
-        ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
-        promise.resolve(shortcut.toWritableMap())
-    }
+    override fun addShortcut(params: ReadableMap, promise: Promise) =
+        handleShortcutOperation(promise) {
+            val shortcut = createShortcut(params)
+            ShortcutManagerCompat.pushDynamicShortcut(context, shortcut)
+            promise.resolve(shortcut.toWritableMap())
+        }
 
-    override fun updateShortcut(params: ReadableMap, promise: Promise) = handleShortcutOperation(promise) {
-        val id = params.getString("id") ?: throw Exception("No ID provided")
-        getShortcutById(id) ?: throw Exception("No shortcut with id: $id")
-        val updatedShortcut = createShortcut(params)
-        ShortcutManagerCompat.updateShortcuts(context, listOf(updatedShortcut))
-        promise.resolve(updatedShortcut.toWritableMap())
-    }
+    override fun updateShortcut(params: ReadableMap, promise: Promise) =
+        handleShortcutOperation(promise) {
+            val id = params.getString("id") ?: throw Exception("No ID provided")
+            getShortcutById(id) ?: throw Exception("No shortcut with id: $id")
+            val updatedShortcut = createShortcut(params)
+            ShortcutManagerCompat.updateShortcuts(context, listOf(updatedShortcut))
+            promise.resolve(updatedShortcut.toWritableMap())
+        }
 
     override fun removeShortcut(id: String, promise: Promise) = handleShortcutOperation(promise) {
         ShortcutManagerCompat.disableShortcuts(context, listOf(id), "Shortcut is no longer valid")
