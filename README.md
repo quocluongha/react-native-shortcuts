@@ -129,18 +129,11 @@ Response:
 Supported options:
 | Key | Platform | Required | Description |
 | --- | --- | --- | --- |
-| `id`               | Both | Yes | A required, app-specific string that you employ to identify the
-shortcut. |
+| `id`               | Both | Yes | A required, app-specific string that you employ to identify the shortcut. |
 | `title`            | Both | Yes | The required, user-visible title for the Home Screen shortcut. |
-| `longLabel`        | Android | No | An extended phrase that describes the shortcut's purpose. If
-there's enough space, the launcher displays this value instead of title. When possible, limit this
-long description to 25 characters. |
-| `subtitle`         | iOS | No | The user-visible subtitle for the Home Screen dynamic quick
-action. |
-| `iconName`         | Both | No | The icon for the Home Screen shortcut. Icon name should be the
-name of your iOS asset or Android drawable.
-Refer [iOS](https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs) [Android](https://developer.android.com/studio/write/resource-manager)
-resource addition. |
+| `longLabel`        | Android | No | An extended phrase that describes the shortcut's purpose. If there's enough space, the launcher displays this value instead of title. When possible, limit this long description to 25 characters. |
+| `subtitle`         | iOS | No | The user-visible subtitle for the Home Screen dynamic quick action. |
+| `iconName`         | Both | No | The icon for the Home Screen shortcut. Icon name should be the name of your iOS asset or Android drawable. Refer [iOS](https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs) & [Android](https://developer.android.com/studio/write/resource-manager) resource addition. |
 
 ### updateShortcut
 
@@ -166,15 +159,9 @@ Supported options:
 | --- | --- | --- | --- |
 | `id`               | Both | Yes | The shortcut id which you want to update. |
 | `title`            | Both | Yes | The required, user-visible title for the Home Screen shortcut. |
-| `longLabel`        | Android | No | An extended phrase that describes the shortcut's purpose. If
-there's enough space, the launcher displays this value instead of title. When possible, limit this
-long description to 25 characters. |
-| `subtitle`         | iOS | No | The user-visible subtitle for the Home Screen dynamic quick
-action. |
-| `iconName`         | Both | No | The icon for the Home Screen shortcut. Icon name should be the
-name of your iOS asset or Android drawable.
-Refer [iOS](https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs) [Android](https://developer.android.com/studio/write/resource-manager)
-resource addition. |
+| `longLabel`        | Android | No | An extended phrase that describes the shortcut's purpose. If there's enough space, the launcher displays this value instead of title. When possible, limit this long description to 25 characters. |
+| `subtitle`         | iOS | No | The user-visible subtitle for the Home Screen dynamic quick action. |
+| `iconName`         | Both | No | The icon for the Home Screen shortcut. Icon name should be the name of your iOS asset or Android drawable. Refer [iOS](https://developer.apple.com/documentation/xcode/managing-assets-with-asset-catalogs) & [Android](https://developer.android.com/studio/write/resource-manager) resource addition. |
 
 ### removeShortcut
 
