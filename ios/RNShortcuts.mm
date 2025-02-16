@@ -106,11 +106,7 @@ RCT_EXPORT_METHOD(updateShortcut:(nonnull NSDictionary *)params resolve:(nonnull
 + (void)handleShortcutItem:(nonnull UIApplicationShortcutItem *)shortcutItem {
     RNShortcutsImpl.shortcutItemType = shortcutItem.type;
     if (sharedInstance) {
-        #ifdef RCT_NEW_ARCH_ENABLED
-            [sharedInstance emitOnShortcutUsed: shortcutItem.type];
-        #else
-            [sharedInstance sendEventWithName:@"onShortcutUsed" body:shortcutItem.type];
-        #endif
+        [sharedInstance sendEventWithName:@"onShortcutUsed" body:shortcutItem.type];
     }
 }
 

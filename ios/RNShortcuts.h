@@ -9,7 +9,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 #ifdef RCT_NEW_ARCH_ENABLED
-@interface RNShortcuts : NativeShortcutsSpecBase <NativeShortcutsSpec>
+@interface RNShortcuts : RCTEventEmitter <NativeShortcutsSpec>
 #else
 @interface RNShortcuts : RCTEventEmitter <RCTBridgeModule>
 #endif

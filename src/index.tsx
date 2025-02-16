@@ -69,10 +69,6 @@ async function getInitialShortcutId(): Promise<string> {
 function addOnShortcutUsedListener(
   callback: (id: string) => void
 ): EventSubscription {
-  if (typeof RNShortcuts.onShortcutUsed === "function" ) {
-    return RNShortcuts.onShortcutUsed(callback)
-  }
-
   return shortcutsEventEmitter.addListener('onShortcutUsed', callback);
 }
 
