@@ -1,5 +1,4 @@
 import { type TurboModule } from 'react-native';
-import type { EventEmitter } from 'react-native/Libraries/Types/CodegenTypes';
 export interface ShortcutResponseType {
     id: string;
     title: string;
@@ -18,7 +17,8 @@ export interface Spec extends TurboModule {
     isShortcutExists(id: string): Promise<boolean>;
     isShortcutSupported(): Promise<boolean>;
     getInitialShortcutId(): Promise<string>;
-    readonly onShortcutUsed: EventEmitter<string>;
+    addListener: (eventType: string) => void;
+    removeListeners: (count: number) => void;
 }
 declare const _default: Spec;
 export default _default;

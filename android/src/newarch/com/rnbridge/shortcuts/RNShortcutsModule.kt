@@ -10,7 +10,6 @@ import androidx.core.content.pm.ShortcutManagerCompat
 import androidx.core.graphics.drawable.IconCompat
 import com.facebook.react.bridge.ActivityEventListener
 import com.facebook.react.bridge.Arguments
-import com.facebook.react.bridge.Callback
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
 import com.facebook.react.bridge.ReadableMap
@@ -148,7 +147,9 @@ class RNShortcutsModule(reactContext: ReactApplicationContext) :
     }
 
     private fun sendEvent(id: String) {
-        emitOnShortcutUsed(id)
+        context
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+            .emit("onShortcutUsed", id)
     }
 
     override fun onActivityResult(a: Activity?, b: Int, c: Int, d: Intent?) {}
