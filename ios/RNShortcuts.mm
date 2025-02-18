@@ -6,7 +6,11 @@
 #import "react-native-shortcuts/RNShortcuts-Bridging-Header.h"
 #endif
 
+#if __has_include("react_native_shortcuts-Swift.h")
 #import "react_native_shortcuts-Swift.h"
+#else
+#import "react_native_shortcuts/react_native_shortcuts-Swift.h"
+#endif
 
 @implementation RNShortcuts
 
