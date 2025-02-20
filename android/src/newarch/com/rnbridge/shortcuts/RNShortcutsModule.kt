@@ -166,6 +166,10 @@ class RNShortcutsModule(reactContext: ReactApplicationContext) :
         super.invalidate()
     }
 
+    override fun addListener(eventType: String) {}
+
+    override fun removeListeners(count: Double) {}
+
     companion object {
         const val NAME = "RNShortcuts"
     }
