@@ -6,6 +6,8 @@ React native library for android shortcuts and iOS quick actions which allow use
 
 Fully compatible with TypeScript & Turbomodules.
 
+Required React Native Version >=0.72.0
+
 ## Example
 
 | Android                                                                                                | iOS                                                                                                    |
