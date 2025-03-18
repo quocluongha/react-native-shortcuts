@@ -6,6 +6,8 @@ React native library for android shortcuts and iOS quick actions which allow use
 
 Fully compatible with TypeScript & Turbomodules.
 
+Required React Native Version >=0.72.0
+
 ## Example
 
 | Android                                                                                                | iOS                                                                                                    |
@@ -261,8 +263,5 @@ To run example app, follow the below steps
 
 1. Clone the repository
 2. Do `yarn install`
-3. Next navigate to example folder i.e `cd example`
-4. Do `yarn install`
-5. Next navigate to ios folder i.e `cd ios` and do `pod install`, then `cd ..`
-6. For android run `yarn android`
-7. For ios run `yarn ios`
+3. For android`yarn example android`
+5. For iOS `cd ios` and do `bundle exec pod install` and run the iOS app from XCode
