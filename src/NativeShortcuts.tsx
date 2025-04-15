@@ -5,6 +5,9 @@ export interface ShortcutResponseType {
   title: string;
   subTitle?: string;
   longLabel?: string;
+  userInfo?: {
+    [key: string]: string | number;
+  };
 }
 
 export interface ShortcutParamsType extends ShortcutResponseType {
@@ -20,7 +23,7 @@ export interface Spec extends TurboModule {
   isShortcutExists(id: string): Promise<boolean>;
   isShortcutSupported(): Promise<boolean>;
   getInitialShortcutId(): Promise<string>;
-	addListener: (eventType: string) => void;
+  addListener: (eventType: string) => void;
   removeListeners: (count: number) => void;
 }
 

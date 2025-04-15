@@ -78,20 +78,20 @@ public class RNShortcutsImpl: NSObject {
             return
         }
         
-        let shortcutItem = createShortcutItem(id: id, title: title, subtitle: params["subTitle"] as? String, iconName: params["iconName"] as? String)
+        let shortcutItem = createShortcutItem(id: id, title: title, subtitle: params["subTitle"] as? String, iconName: params["iconName"] as? String, userInfo: params["userInfo"] as? [String : any NSSecureCoding])
         
         DispatchQueue.main.async {
             operation(shortcutItem)
         }
     }
     
-    private func createShortcutItem(id: String, title: String, subtitle: String?, iconName: String?) -> UIApplicationShortcutItem {
+    private func createShortcutItem(id: String, title: String, subtitle: String?, iconName: String?, userInfo: [String : any NSSecureCoding]?) -> UIApplicationShortcutItem {
         return UIApplicationShortcutItem(
             type: id,
             localizedTitle: title,
             localizedSubtitle: subtitle,
             icon: getUIApplicationShortcutIcon(iconName: iconName),
-            userInfo: nil
+            userInfo: userInfo
         )
     }
     
@@ -116,6 +116,18 @@ public class RNShortcutsImpl: NSObject {
         guard let iconName = iconName else { return nil}
         return UIApplicationShortcutIcon(templateImageName: iconName)
     }
+
+    private func convertToSecureCodingDictionary(from object: NSObject) -> [String: any NSSecureCoding]? {
+        guard let dictionary = object as? [String: Any] else { return nil }
+
+        var secureCodingDict = [String: any NSSecureCoding]()
+
+        for (key, value) in dictionary {
+            secureCodingDict[key] = value
+        }
+
+        return secureCodingDict
+    }
 }
 
 private extension UIApplicationShortcutItem {
@@ -123,7 +135,8 @@ private extension UIApplicationShortcutItem {
         return [
             "id": type,
             "title": localizedTitle,
-            "subtitle": localizedSubtitle
+            "subtitle": localizedSubtitle,
+            "userInfo": userInfo
         ]
     }
 }

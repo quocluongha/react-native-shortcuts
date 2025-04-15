@@ -55,7 +55,10 @@ export const App = () => {
           Shortcuts.addShortcut({
             id,
             title,
-            iconName
+            iconName,
+            userInfo: {
+              key: 'test'
+            }
           })
             .then((response) =>
               Alert.alert(

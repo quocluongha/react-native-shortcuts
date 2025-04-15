@@ -51,6 +51,7 @@ static RNShortcuts *sharedInstance = nil;
     dict[@"title"] = params.title() ?: @"";
     dict[@"subTitle"] = params.subTitle() ?: @"";
     dict[@"longLabel"] = params.longLabel() ?: @"";
+    dict[@"userInfo"] = params.userInfo() ?: nil;
     
     return [dict copy];
 }
