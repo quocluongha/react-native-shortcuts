@@ -123,7 +123,7 @@ public class RNShortcutsImpl: NSObject {
         var secureCodingDict = [String: any NSSecureCoding]()
 
         for (key, value) in dictionary {
-            secureCodingDict[key] = value
+            secureCodingDict[key] = value as? any NSSecureCoding
         }
 
         return secureCodingDict
@@ -131,7 +131,7 @@ public class RNShortcutsImpl: NSObject {
 }
 
 private extension UIApplicationShortcutItem {
-    func toDictionary() -> [String: String?] {
+    func toDictionary() -> [String: Any?] {
         return [
             "id": type,
             "title": localizedTitle,
