@@ -4,6 +4,9 @@ export interface ShortcutResponseType {
     title: string;
     subTitle?: string;
     longLabel?: string;
+    userInfo?: {
+        [key: string]: string | number;
+    };
 }
 export interface ShortcutParamsType extends ShortcutResponseType {
     iconName?: string;
